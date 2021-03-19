@@ -23,7 +23,7 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     // ScreenUtil.init(width: 750, height: 1334, allowFontScaling: true);
     return Scaffold(
-      resizeToAvoidBottomPadding: true,
+      resizeToAvoidBottomInset: true,
       body: Container(
         width: double.infinity,
         decoration: BoxDecoration(
@@ -97,7 +97,7 @@ class _LoginState extends State<Login> {
                 Text("Login",
                     style: TextStyle(
                         // fontSize: ScreenUtil().setSp(45),
-                      fontSize: 30,
+                        fontSize: 30,
                         fontFamily: "Poppins-Bold",
                         fontWeight: FontWeight.bold,
                         letterSpacing: .6)),
@@ -107,13 +107,12 @@ class _LoginState extends State<Login> {
                 ),
                 Text("E-Mail",
                     style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontFamily: "Poppins-Medium",
-                        fontSize: 15,
-                        // fontSize: ScreenUtil().setSp(30)
+                      fontWeight: FontWeight.bold,
+                      fontFamily: "Poppins-Medium",
+                      fontSize: 15,
+                      // fontSize: ScreenUtil().setSp(30)
                     )),
                 TextFormField(
-
                   keyboardType: TextInputType.emailAddress,
                   validator: (item) {
                     return item.contains("@") ? null : "Enter valid Email";
@@ -126,8 +125,7 @@ class _LoginState extends State<Login> {
                   decoration: InputDecoration(
                       hintText: "E-Mail",
                       hintStyle:
-                      TextStyle(color: Colors.black, fontSize: 15.0)),
-
+                          TextStyle(color: Colors.black, fontSize: 15.0)),
                 ),
                 SizedBox(
                   // height: ScreenUtil().setHeight(30),
@@ -135,17 +133,18 @@ class _LoginState extends State<Login> {
                 ),
                 Text("Password",
                     style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontFamily: "Poppins-Medium",
-                        fontSize: 15,
-                        // fontSize: ScreenUtil().setSp(30)
+                      fontWeight: FontWeight.bold,
+                      fontFamily: "Poppins-Medium",
+                      fontSize: 15,
+                      // fontSize: ScreenUtil().setSp(30)
                     )),
                 TextFormField(
-
                   obscureText: true,
                   keyboardType: TextInputType.text,
                   validator: (item) {
-                    return item.length > 7 ? null : "Password must be at least 8 characters";
+                    return item.length > 7
+                        ? null
+                        : "Password must be at least 8 characters";
                   },
                   onChanged: (item) {
                     setState(() {
@@ -155,7 +154,7 @@ class _LoginState extends State<Login> {
                   decoration: InputDecoration(
                       hintText: "Password",
                       hintStyle:
-                      TextStyle(color: Colors.black, fontSize: 15.0)),
+                          TextStyle(color: Colors.black, fontSize: 15.0)),
                 ),
                 SizedBox(
                   height: 20,
@@ -215,12 +214,12 @@ class _LoginState extends State<Login> {
           Row(children: <Widget>[
             Expanded(
                 child: Container(
-                  margin: const EdgeInsets.only(left: 10.0, right: 20.0),
-                  child: Divider(
-                    color: Colors.black,
-                    thickness: 3.0,
-                  ),
-                )),
+              margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+              child: Divider(
+                color: Colors.black,
+                thickness: 3.0,
+              ),
+            )),
             Text(
               "OR",
               style: TextStyle(
@@ -230,12 +229,12 @@ class _LoginState extends State<Login> {
             ),
             Expanded(
                 child: Container(
-                  margin: const EdgeInsets.only(left: 20.0, right: 10.0),
-                  child: Divider(
-                    color: Colors.black,
-                    thickness: 3.0,
-                  ),
-                )),
+              margin: const EdgeInsets.only(left: 20.0, right: 10.0),
+              child: Divider(
+                color: Colors.black,
+                thickness: 3.0,
+              ),
+            )),
           ]),
           SizedBox(height: 25),
           _signInButton(),
