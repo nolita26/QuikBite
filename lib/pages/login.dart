@@ -1,11 +1,7 @@
+import 'package:crescendo_hack/pages/dashboard.dart';
+import 'package:crescendo_hack/pages/register.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:crescendo_hack/services/forgetpass.dart';
-import 'package:crescendo_hack/pages/register.dart';
-import 'package:crescendo_hack/services/auth.dart';
-import 'package:crescendo_hack/services/sign_in.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -23,15 +19,10 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     // ScreenUtil.init(width: 750, height: 1334, allowFontScaling: true);
     return Scaffold(
-      resizeToAvoidBottomInset: true,
+      resizeToAvoidBottomPadding: true,
       body: Container(
         width: double.infinity,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            fit: BoxFit.cover,
-            image: AssetImage("images/back.jpg"),
-          ),
-        ),
+        color: Colors.white,
         child: Stack(
           children: <Widget>[
             Align(
@@ -97,7 +88,7 @@ class _LoginState extends State<Login> {
                 Text("Login",
                     style: TextStyle(
                         // fontSize: ScreenUtil().setSp(45),
-                        fontSize: 30,
+                      fontSize: 30,
                         fontFamily: "Poppins-Bold",
                         fontWeight: FontWeight.bold,
                         letterSpacing: .6)),
@@ -107,12 +98,13 @@ class _LoginState extends State<Login> {
                 ),
                 Text("E-Mail",
                     style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontFamily: "Poppins-Medium",
-                      fontSize: 15,
-                      // fontSize: ScreenUtil().setSp(30)
+                        fontWeight: FontWeight.bold,
+                        fontFamily: "Poppins-Medium",
+                        fontSize: 15,
+                        // fontSize: ScreenUtil().setSp(30)
                     )),
                 TextFormField(
+
                   keyboardType: TextInputType.emailAddress,
                   validator: (item) {
                     return item.contains("@") ? null : "Enter valid Email";
@@ -125,7 +117,8 @@ class _LoginState extends State<Login> {
                   decoration: InputDecoration(
                       hintText: "E-Mail",
                       hintStyle:
-                          TextStyle(color: Colors.black, fontSize: 15.0)),
+                      TextStyle(color: Colors.black, fontSize: 15.0)),
+
                 ),
                 SizedBox(
                   // height: ScreenUtil().setHeight(30),
@@ -133,18 +126,17 @@ class _LoginState extends State<Login> {
                 ),
                 Text("Password",
                     style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontFamily: "Poppins-Medium",
-                      fontSize: 15,
-                      // fontSize: ScreenUtil().setSp(30)
+                        fontWeight: FontWeight.bold,
+                        fontFamily: "Poppins-Medium",
+                        fontSize: 15,
+                        // fontSize: ScreenUtil().setSp(30)
                     )),
                 TextFormField(
+
                   obscureText: true,
                   keyboardType: TextInputType.text,
                   validator: (item) {
-                    return item.length > 7
-                        ? null
-                        : "Password must be at least 8 characters";
+                    return item.length > 7 ? null : "Password must be at least 8 characters";
                   },
                   onChanged: (item) {
                     setState(() {
@@ -154,7 +146,7 @@ class _LoginState extends State<Login> {
                   decoration: InputDecoration(
                       hintText: "Password",
                       hintStyle:
-                          TextStyle(color: Colors.black, fontSize: 15.0)),
+                      TextStyle(color: Colors.black, fontSize: 15.0)),
                 ),
                 SizedBox(
                   height: 20,
@@ -189,6 +181,10 @@ class _LoginState extends State<Login> {
                     height: 40,
                     child: RaisedButton(
                       onPressed: () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (context) => DashboardPage()),
+                        );
                         // login();
                       },
                       child: Text(
@@ -214,12 +210,12 @@ class _LoginState extends State<Login> {
           Row(children: <Widget>[
             Expanded(
                 child: Container(
-              margin: const EdgeInsets.only(left: 10.0, right: 20.0),
-              child: Divider(
-                color: Colors.black,
-                thickness: 3.0,
-              ),
-            )),
+                  margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+                  child: Divider(
+                    color: Colors.black,
+                    thickness: 3.0,
+                  ),
+                )),
             Text(
               "OR",
               style: TextStyle(
@@ -229,12 +225,12 @@ class _LoginState extends State<Login> {
             ),
             Expanded(
                 child: Container(
-              margin: const EdgeInsets.only(left: 20.0, right: 10.0),
-              child: Divider(
-                color: Colors.black,
-                thickness: 3.0,
-              ),
-            )),
+                  margin: const EdgeInsets.only(left: 20.0, right: 10.0),
+                  child: Divider(
+                    color: Colors.black,
+                    thickness: 3.0,
+                  ),
+                )),
           ]),
           SizedBox(height: 25),
           _signInButton(),
@@ -258,7 +254,7 @@ class _LoginState extends State<Login> {
                 child: Text(
                   'Register',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Colors.black,
                     fontFamily: 'Montserrat',
                     fontWeight: FontWeight.bold,
                     decoration: TextDecoration.underline,
@@ -266,11 +262,11 @@ class _LoginState extends State<Login> {
                   ),
                 ),
                 onTap: () {
-                  // Navigator.push(
-                  //     context,
-                  //     MaterialPageRoute(
-                  //         builder: (context) => Register(),
-                  //         fullscreenDialog: true));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Register(),
+                          fullscreenDialog: true));
                 },
               ),
             ],

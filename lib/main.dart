@@ -1,6 +1,7 @@
+import 'package:crescendo_hack/essentials/getstarted.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:splashscreen/splashscreen.dart';
-import 'package:crescendo_hack/intropages/intro_layout.dart';
 
 void main() => runApp(MaterialApp(
   debugShowCheckedModeBanner: false,
@@ -18,10 +19,10 @@ class _SplashState extends State<Splash> {
     return SplashScreen(
       seconds: 5,
       backgroundColor: Colors.white,
-      image: Image.asset(''),
+      image: Image.asset('images/logo.png', height: 150, width: 150,),
       loaderColor: Colors.black,
       photoSize: 180.0,
-      navigateAfterSeconds: IntroLayout(),
+      navigateAfterSeconds: GetStarted(),
 //      TODO: Add Wrapper , Once Firebase Authentication is sorted
     );
   }

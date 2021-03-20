@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "379091563399",
+    "firebase_url": "https://crescendo-app-934e2-default-rtdb.firebaseio.com",
+    "project_id": "crescendo-app-934e2",
+    "storage_bucket": "crescendo-app-934e2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:379091563399:android:014556f2e13c4557f3d922",
+        "android_client_info": {
+          "package_name": "com.example.crescendo_hack"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "379091563399-43gn3ktvint429slt0s3u3s1pao3pf4g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCoFxCTrXxuZFcH5tJYykhY3XqGES6l0Ps"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "379091563399-43gn3ktvint429slt0s3u3s1pao3pf4g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
