@@ -35,6 +35,9 @@ dependencies:
   firebase_core: ^0.4.5
   curved_navigation_bar: ^0.3.3
   flutter_spinkit: ^4.1.2+1
+  http: 
+  google_maps_flutter: 
+  shared_preferences:
 
 
   # The following adds the Cupertino Icons font to your application.
