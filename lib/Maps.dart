@@ -5,8 +5,8 @@ import 'package:http/http.dart' as http;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class PlacesSearchMapSample extends StatefulWidget {
-  final String keyword;
-  PlacesSearchMapSample(this.keyword);
+  // final String keyword;
+  // PlacesSearchMapSample(this.keyword);
 
   @override
   State<PlacesSearchMapSample> createState() {

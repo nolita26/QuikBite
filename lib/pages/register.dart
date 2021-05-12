@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+import 'login.dart';
+
 class Register extends StatefulWidget {
   final String uid;
   Register({Key key, this.uid}) : super(key: key);
@@ -16,21 +18,20 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
-
   final GlobalKey<FormState> _registerFormKey = GlobalKey<FormState>();
-  bool isLoading = false;
-  var error = "";
 
   TextEditingController nameController = new TextEditingController();
   TextEditingController emailController = new TextEditingController();
   TextEditingController passwordController = new TextEditingController();
+
+  bool isLoading = false;
+  var error = "";
 
   @override
   void initState() {
     super.initState();
   }
 
-  final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn googleSignIn = GoogleSignIn();
   Future<String> signInWithGoogle() async {
     final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
@@ -42,20 +43,20 @@ class _RegisterState extends State<Register> {
       idToken: googleSignInAuthentication.idToken,
     );
 
-    final AuthResult authResult = await _auth.signInWithCredential(credential);
+    final AuthResult authResult = await FirebaseAuth.instance.signInWithCredential(credential);
     final FirebaseUser user = authResult.user;
 
     assert(!user.isAnonymous);
     assert(await user.getIdToken() != null);
 
-    final FirebaseUser currentUser = await _auth.currentUser();
+    final FirebaseUser currentUser = await FirebaseAuth.instance.currentUser();
     assert(user.uid == currentUser.uid);
 
     return 'signInWithGoogle succeeded: $user';
   }
+
   void signOutGoogle() async{
     await googleSignIn.signOut();
-
     print("User Sign Out");
   }
 
@@ -76,11 +77,11 @@ class _RegisterState extends State<Register> {
             "password": passwordController.text
           }).then((result) =>
           {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => DashboardPage(),
-                fullscreenDialog: true)),
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => DashboardPage(),
+                    fullscreenDialog: true)),
             nameController.clear(),
             emailController.clear(),
             passwordController.clear()
@@ -95,35 +96,6 @@ class _RegisterState extends State<Register> {
       });
     }
   }
-
-  // Future<void> _showDialog(BuildContext context){
-  //   return showDialog(context: context, builder: (BuildContext context) {
-  //     return AlertDialog(
-  //       title: Text("Make a Choice"),
-  //       content: SingleChildScrollView(
-  //         child: ListBody(
-  //           children: <Widget>[
-  //             GestureDetector(
-  //               child: Text("Gallery"),
-  //               onTap: () {
-  //                 _openGallery();
-  //               },
-  //             ),
-  //             Padding(
-  //               padding: EdgeInsets.all(8.0),
-  //             ),
-  //             GestureDetector(
-  //               child: Text("Camera"),
-  //               onTap: () {
-  //                 _openCamera();
-  //               },
-  //             ),
-  //           ],
-  //         ),
-  //       ),
-  //     );
-  //   });
-  // }
 
   String emailValidator(String value) {
     Pattern pattern =
@@ -147,17 +119,16 @@ class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
     return isLoading ? Loading() : Scaffold(
-      resizeToAvoidBottomPadding: true,
+      appBar: AppBar(
+        title: Center(child: Text("Register", style: TextStyle(color: Colors.white, fontSize: 25),)),
+        backgroundColor: Colors.black,
+        elevation: 0,
+      ),
       body: SingleChildScrollView(
         child: Container(
+          color: Colors.white,
           width: double.infinity,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              fit: BoxFit.cover,
-              image: AssetImage("images/reg_back.png"),
-            ),
-          ),
-          child: Stack(
+          child: Column(
             children: <Widget>[
               Align(
                 alignment: Alignment.bottomCenter,
@@ -165,28 +136,8 @@ class _RegisterState extends State<Register> {
                   width: double.infinity,
                   child: Padding(
                     padding: EdgeInsets.only(left: 20, top: 30, right: 20),
-                    child: Stack(
+                    child: Column(
                       children: <Widget>[
-                        Positioned(
-                          top: 20,
-                          left: 10,
-                          child: GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => Login(),
-                                      fullscreenDialog: true));
-                            },
-                            child: Align(
-                              alignment: Alignment.topLeft,
-                              child: Icon(
-                                Icons.arrow_back_ios,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
-                        ),
                         Center(
                           child: Column(
                             mainAxisSize: MainAxisSize.max,
@@ -203,30 +154,19 @@ class _RegisterState extends State<Register> {
                                         padding: EdgeInsets.only(
                                             left: 16.0, right: 16.0, top: 8.0),
                                         child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment
-                                              .start,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
                                           children: <Widget>[
-                                            Center(
-                                              child: Text("Register",
-                                                  style: TextStyle(
-                                                    // fontSize: ScreenUtil().setSp(45),
-                                                      fontSize: 25,
-                                                      fontFamily: "Poppins-Bold",
-                                                      fontWeight: FontWeight.bold,
-                                                      letterSpacing: .6)),
-                                            ),
                                             SizedBox(height: 60,),
                                             Text("Name",
                                                 style: TextStyle(
                                                   fontWeight: FontWeight.bold,
                                                   fontFamily: "Poppins-Medium",
-                                                  fontSize: 15,
+                                                  fontSize: 20,
                                                 )),
                                             TextFormField(
                                               decoration: InputDecoration(
                                                   hintText: "Name",
-                                                  hintStyle:
-                                                  TextStyle(color: Colors.black,
+                                                  hintStyle: TextStyle(color: Colors.black,
                                                       fontSize: 15.0)),
                                               keyboardType: TextInputType.text,
                                               validator: (value) {
@@ -243,7 +183,7 @@ class _RegisterState extends State<Register> {
                                                 style: TextStyle(
                                                   fontWeight: FontWeight.bold,
                                                   fontFamily: "Poppins-Medium",
-                                                  fontSize: 15,
+                                                  fontSize: 20,
                                                 )),
                                             TextFormField(
                                               decoration: InputDecoration(
@@ -262,7 +202,7 @@ class _RegisterState extends State<Register> {
                                                   fontWeight: FontWeight.bold,
                                                   fontFamily: "Poppins-Medium",
                                                   // fontSize: ScreenUtil().setSp(30)
-                                                  fontSize: 15,
+                                                  fontSize: 20,
                                                 )),
                                             TextFormField(
                                               obscureText: true,
@@ -275,60 +215,27 @@ class _RegisterState extends State<Register> {
                                               controller: passwordController,
                                               validator: pwdValidator,
                                             ),
-                                            SizedBox(height: 15),
-                                            // Text("Mobile No.",
-                                            //     style: TextStyle(
-                                            //         fontWeight: FontWeight.bold,
-                                            //         fontFamily: "Poppins-Medium",
-                                            //         // fontSize: ScreenUtil().setSp(30)
-                                            //       fontSize: 20,
-                                            //     )),
-//                 TextFormField(
-//                   obscureText: true,
-//                   decoration: InputDecoration(
-//                       hintText: "Mobile No.",
-//                       hintStyle:
-//                       TextStyle(color: Colors.black, fontSize: 15.0)),
-// //                  keyboardType: TextInputType.emailAddress,
-// //                  validator: (item) {
-// //                    return item.contains("@") ? null : "Enter valid Email";
-// //                  },
-// //                  onChanged: (item) {
-// //                    setState(() {
-// //                      _email = item;
-// //                    });
-// //                  },
-//                   //controller: _email,
-//                   //keyboardType: TextInputType.emailAddress,
-//                   //validator: emailValidator,
-//
-//                 ),
-                                            SizedBox(height: 15),
+                                            SizedBox(height: 25),
                                             Center(
                                               child: Container(
                                                 width: 200,
-                                                height: 40,
+                                                height: 50,
                                                 child: RaisedButton(
-                                                  onPressed: () {
-                                                    Navigator.push(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                            builder: (context) => DashboardPage()));
-                                                  },
+                                                  onPressed: register,
                                                   child: Text(
                                                     'Register',
                                                     style: TextStyle(
                                                       fontWeight: FontWeight.bold,
-                                                      fontSize: 19,
+                                                      fontSize: 20,
                                                     ),
                                                   ),
                                                   shape: RoundedRectangleBorder(
                                                     borderRadius: new BorderRadius
                                                         .circular(30.0),
                                                   ),
-                                                  color: Colors.white,
+                                                  color: Colors.black,
                                                   splashColor: Colors.blue,
-                                                  textColor: Colors.black,
+                                                  textColor: Colors.white,
                                                 ),
                                               ),
                                             ),
@@ -343,7 +250,7 @@ class _RegisterState extends State<Register> {
                                               margin: const EdgeInsets.only(
                                                   left: 10.0, right: 20.0),
                                               child: Divider(
-                                                color: Colors.black,
+                                                color: Colors.white,
                                                 thickness: 3.0,
                                               ),
                                             )),
@@ -365,7 +272,42 @@ class _RegisterState extends State<Register> {
                                             )),
                                       ]),
                                       SizedBox(height: 15),
-                                      _signInButton(),
+                                      FlatButton(
+                                        color: Colors.black,
+                                        splashColor: Colors.white,
+                                        onPressed: () {
+                                          signInWithGoogle().whenComplete(() {
+                                            Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                builder: (context) {
+                                                  return DashboardPage(uid: widget.uid,);
+                                                },
+                                              ),
+                                            );
+                                          });
+                                        },
+                                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+                                        child: Padding(
+                                          padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: <Widget>[
+                                              Image(image: AssetImage("images/googlee.png"), height: 30.0),
+                                              Padding(
+                                                padding: const EdgeInsets.only(left: 10),
+                                                child: Text(
+                                                  'Sign up with Google',
+                                                  style: TextStyle(
+                                                    fontSize: 20,
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      ),
                                       SizedBox(height: 10),
                                       Row(
                                         mainAxisAlignment: MainAxisAlignment
@@ -387,7 +329,7 @@ class _RegisterState extends State<Register> {
                                             child: Text(
                                               'Login',
                                               style: TextStyle(
-                                                color: Colors.white,
+                                                color: Colors.black,
                                                 fontFamily: 'Montserrat',
                                                 fontWeight: FontWeight.bold,
                                                 decoration: TextDecoration
@@ -420,46 +362,6 @@ class _RegisterState extends State<Register> {
               )
             ],
           ),
-        ),
-      ),
-    );
-  }
-
-
-  Widget _signInButton() {
-    return FlatButton(
-      color: Colors.white,
-      splashColor: Colors.grey,
-      onPressed: () {
-        signInWithGoogle().whenComplete(() {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) {
-                return DashboardPage(uid: widget.uid,);
-              },
-            ),
-          );
-        });
-      },
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Image(image: AssetImage("images/google.png"), height: 30.0),
-            Padding(
-              padding: const EdgeInsets.only(left: 10),
-              child: Text(
-                'Sign up with Google',
-                style: TextStyle(
-                  fontSize: 18,
-                  color: Colors.black,
-                ),
-              ),
-            )
-          ],
         ),
       ),
     );

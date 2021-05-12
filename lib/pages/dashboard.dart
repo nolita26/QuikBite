@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crescendo_hack/essentials/themecolor.dart';
 import 'package:crescendo_hack/pages/homepage.dart';
-import 'package:crescendo_hack/pages/nutritionpage.dart';
+import 'package:crescendo_hack/pages/Ingredients.dart';
 import 'package:crescendo_hack/pages/profilepage.dart';
 import 'package:crescendo_hack/pages/recommendationpage.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
@@ -30,13 +30,13 @@ class _DashboardPageState extends State<DashboardPage> {
         return HomePage();
         break;
       case 1:
-        return NutritionPage();
+        return Ingredients();
         break;
       case 2:
         return RecommendationsPage();
         break;
       case 3:
-        return ProfilePage();
+        return MainCard();
         break;
       default:
         return new Container(
